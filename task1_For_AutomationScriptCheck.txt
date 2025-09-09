@@ -1,0 +1,32 @@
+code is fixed.
+
+
+
+
+# Define variables
+$repositoryPath = "C:\path\to\your\repo" # Replace with the actual path to your Git repository
+$sourceBranch = "main"
+$targetBranch = "develop"
+
+# Navigate to the Git repository
+Set-Location -Path $repositoryPath
+
+# Ensure the target branch exists locally and switch to it
+git checkout $targetBranch
+
+# Pull the latest changes for the target branch
+git pull origin $targetBranch
+
+# Merge the source branch into the target branch
+# The --no-ff flag prevents a fast-forward merge, creating a merge commit even if not strictly necessary.
+# This helps maintain a clear history of merges.
+git merge --no-ff $sourceBranch
+
+# Check for merge conflicts and handle them manually if they occur.
+# If conflicts exist, the script will pause and require manual intervention in the terminal.
+# After resolving conflicts, use 'git add .' and 'git commit'.
+
+# Push the merged changes to the remote target branch
+git push origin $targetBranch
+
+Write-Host "Merge from '$sourceBranch' to '$targetBranch' completed successfully (assuming no conflicts)."
